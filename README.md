@@ -1,1 +1,0 @@
-# moneymate_protos

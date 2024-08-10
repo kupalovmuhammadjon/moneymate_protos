@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "genproto/users";
+
+package users;
+
+message PrimaryKey {
+    string id = 1;
+}
+
+message Message {
+    string message = 1;
+}

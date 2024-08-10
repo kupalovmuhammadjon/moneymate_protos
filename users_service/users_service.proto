@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option go_package = "genproto/users";
+
+import "users.proto";
+
+package users;
+
+service UsersService {
+    rpc GetUserProfile      (PrimaryKey) returns        (user);
+    rpc UpdateUserProfile   (updateUser) returns        (updateProfileResponce);
+    rpc ChangePassword      (changePassword) returns    (Message);
+    rpc ForgotPassword      (ForgotPasswordReq) returns (Message);
+    rpc ResetPassword       (ResetPasswordReq) returns  (Message);
+}
+
+message user {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string full_name = 4;
+    string native_language = 5;
+    string created_at = 6;
+}
+
+message updateUser {
+    string id = 1;
+    string full_name = 2;
+    string native_language = 3;
+}
+
+message updateProfileResponce {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string full_name = 4;
+    string native_language = 5;
+    string updated_at = 6;
+}
+
+message changePassword {
+    string current_password = 1;
+    string new_password = 2;
+    string user_id = 3;
+}
+
+message ForgotPasswordReq {
+    string email = 1;
+}
+
+message ResetPasswordReq {
+    string code = 1;
+    string new_password = 2; 
+    string user_id = 3;
+    string email = 4;
+}
