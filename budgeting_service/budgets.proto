@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "genproto/budgeting_service";
+
+package budgeting_service;
+
+import "budgeting_service.proto";
+
+service BudgetService{
+    rpc Create  (CreateBudget)  returns (Budget);
+    rpc GetById (PrimaryKey)    returns (Budget);
+    rpc GetAll  (BudgetFilter)  returns (Budgets);
+    rpc Update  (Budget)        returns (Budget);
+    rpc Delete  (PrimaryKey)    returns (Void);
+}
+
+message CreateBudget {
+    string user_id     = 1;
+    string category_id = 2;
+    double amount      = 3;         
+    string period      = 4;         
+    string start_date  = 5;     
+    string end_date    = 6;
+}
+
+message Budget {
+    string id          = 1;             
+    string user_id     = 2;
+    string category_id = 3;
+    double amount      = 4;
+    string period      = 5;
+    string start_date  = 6;
+    string end_date    = 7;       
+    string created_at  = 8;     
+    string updated_at  = 9;
+}
+
+message BudgetFilter {
+    int32 page         = 1;
+    int32 limit        = 2;
+    string user_id     = 3;
+    string category_id = 4;
+    double amount      = 5;
+    string period      = 6;
+    string start_date  = 7;
+    string end_date    = 8;  
+}
+
+message Budgets{
+    repeated Budget budgets = 1;
+}

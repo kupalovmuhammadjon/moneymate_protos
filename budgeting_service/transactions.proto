@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+option go_package = "genproto/budgeting_service";
+
+package budgeting_service;
+
+import "budgeting_service.proto";
+
+service TransactionService {
+    rpc Create                          (CreateTransaction) returns (Transaction);
+    rpc GetById                         (PrimaryKey)        returns (Transaction);
+    rpc GetAll                          (TransactionFilter) returns (Transactions);
+    rpc Update                          (Transaction)       returns (Transaction);
+    rpc Delete                          (PrimaryKey)        returns (Void);
+
+    rpc GenerateSpendingReport          (PrimaryKey)        returns (Spendings);
+    rpc GenerateIncomeReport            (PrimaryKey)        returns (Incomes);
+    rpc GenerateBudgetPerformanceReport (PrimaryKey)        returns (BugetPerformance);
+    rpc GenerateGoalProgressReport      (PrimaryKey)        returns (GoalProgress);
+}
+
+message CreateTransaction {
+    string user_id     = 1;
+    string account_id  = 2;
+    string category_id = 3;
+    double amount      = 4;
+    string type        = 5;
+    string description = 6;
+    string date        = 7;
+}
+
+message Transaction {
+    string id          = 1;
+    string user_id     = 2;
+    string account_id  = 3;
+    string category_id = 4;
+    double amount      = 5;
+    string type        = 6;
+    string description = 7;
+    string date        = 8;
+    string created_at  = 9;
+    string updated_at  = 10;
+}
+
+message TransactionFilter {
+    int32 page         = 1;
+    int32 limit        = 2;
+    string user_id     = 3;
+    string account_id  = 4;
+    string category_id = 5;
+    double amount      = 6;
+    string type        = 7;
+    string date        = 9;
+}
+
+message Transactions {
+    repeated Transaction transactions = 1;
+}
+
+message Spendings {
+    repeated Spending spendings = 1;
+}
+
+message Spending {
+    string user_id                    = 1;
+    double total_amount               = 2;
+    string category_name              = 3;
+    repeated string transaction_types = 4;
+}
+
+message Income {
+    string user_id                    = 1;
+    double total_amount               = 2;
+    string category_name              = 3;
+    repeated string transaction_types = 4;
+}
+
+message Incomes {
+    repeated Income incomes = 1;
+}
+
+message BugetPerformance {
+    double surplus               = 1;
+    double loss                  = 2;
+    float  surplus_percentage    = 3;
+    float  loss_percentage       = 4;
+    bool is_in_surplus           = 5;
+    int32 categories_in_surplus  = 6;
+    int32 categories_in_loss     = 7;
+    int32 categories_in_progress = 8;
+}
+
+message GoalProgress {
+    double surplus           = 1;
+    float working_percentage = 2;
+    int32 goals_achived      = 3;
+    int32 goals_failed       = 4;
+    int32 goals_inprogress   = 5;
+}

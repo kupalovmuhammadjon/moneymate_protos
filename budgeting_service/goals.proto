@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "genproto/budgeting_service";
+
+package budgeting_service;
+
+import "budgeting_service.proto";
+
+service GoalService{
+    rpc Create  (CreateGoal) returns (Goal);
+    rpc GetById (PrimaryKey) returns (Goal);
+    rpc GetAll  (GoalFilter) returns (Goals);
+    rpc Update  (Goal)       returns (Goal);
+    rpc Delete  (PrimaryKey) returns (Void);
+}
+
+message CreateGoal{
+    string user_id        = 1;
+    string name           = 2;
+    double target_amount  = 3;
+    double current_amount = 4;
+    string deadline       = 5;
+    string status         = 6;
+}
+
+message Goal {
+    string id             = 1;
+    string user_id        = 2;
+    string name           = 3;
+    double target_amount  = 4;
+    double current_amount = 5;
+    string deadline       = 6;
+    string status         = 7;
+    string created_at     = 8;
+    string updated_at     = 9;
+}
+
+message GoalFilter{
+    int32 page            = 1;
+    int32 limit           = 2;
+    string user_id        = 3;
+    string name           = 4;
+    double target_amount  = 5;
+    double current_amount = 6;
+    string deadline       = 7;
+    string status         = 8;
+}
+
+message Goals{
+    repeated Goal goals = 1;
+}

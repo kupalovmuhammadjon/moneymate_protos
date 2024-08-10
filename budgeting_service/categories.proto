@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package = "genproto/budgeting_service";
+
+package budgeting_service;
+
+import "budgeting_service.proto";
+
+service CategoryService{
+    rpc Create  (CreateCategory) returns (Category);
+    rpc GetById (PrimaryKey)     returns (Category);
+    rpc GetAll  (CategoryFilter) returns (Categories);
+    rpc Update  (Category)       returns (Category);
+    rpc Delete  (PrimaryKey)     returns (Void);
+}
+
+message CreateCategory {
+    string user_id = 1;
+    string name    = 2;
+    string type    = 3;
+}
+
+message Category {
+    string id         = 1;
+    string user_id    = 2;
+    string name       = 3;
+    string type       = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+message CategoryFilter {
+    int32 page     = 1;
+    int32 limit    = 2;
+    string user_id = 3;
+    string name    = 4;
+    string type    = 5;
+}
+
+message Categories{
+    repeated Category categories = 1;
+}
